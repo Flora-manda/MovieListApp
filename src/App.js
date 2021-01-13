@@ -34,6 +34,7 @@ function App() {
   const addNominatedMovie = (movie) => {
     const nominationList = [...nominations, movie];
     setNominations(nominationList);
+    saveToLocalStorage(nominationList);
   };
   // handler function to remove nominated movie
   const removeNominatedMovie = (movie) => {
@@ -41,7 +42,21 @@ function App() {
       (nomination) => nomination.imdbID !== movie.imdbID
     );
     setNominations(nominationList);
+    saveToLocalStorage(nominationList);
   };
+
+  // save nomination list upon page refresh to local storage
+  const saveToLocalStorage = (items) => {
+    localStorage.setItem("movie-nominations", JSON.stringify(items));
+  };
+
+  // async request to fecth saved nominated movie list from local storage
+  useEffect(() => {
+    const nominatedMovies = JSON.parse(
+      localStorage.getItem("movie-nominations")
+    );
+    setNominations(nominatedMovies);
+  }, []);
 
   return (
     <div className="bx--grid">
