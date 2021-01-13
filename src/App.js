@@ -6,11 +6,14 @@ import MovieList from "./components/MovieList";
 import SearchInput from "./components/SearchInput";
 import { getMovies } from "./helpers/getMovies";
 import useDebounce from "./hooks/useDebounce";
+import AddNomination from "./components/AddNomination";
+import RemoveNomination from "./components/RemoveNomination";
 
 function App() {
   const [listOfMovies, setListOfMovies] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(false);
+  const [nominations, setNominations] = useState([]);
   const debouncedSearchTerm = useDebounce(searchTerm, 400);
 
   // asyn request to fetch list of movies from OMDB API
@@ -26,6 +29,19 @@ function App() {
       setListOfMovies([]);
     }
   }, [debouncedSearchTerm]);
+
+  // handler function to nominate movie
+  const addNominatedMovie = (movie) => {
+    const nominationList = [...nominations, movie];
+    setNominations(nominationList);
+  };
+  // handler function to remove nominated movie
+  const removeNominatedMovie = (movie) => {
+    const nominationList = nominations.filter(
+      (nomination) => nomination.imdbID !== movie.imdbID
+    );
+    setNominations(nominationList);
+  };
 
   return (
     <div className="bx--grid">
@@ -44,8 +60,20 @@ function App() {
               withOverlay={false}
             />
           ) : (
-            <MovieList movies={listOfMovies} />
+            <MovieList
+              movies={listOfMovies}
+              nominateComponent={AddNomination}
+              handleNominateClick={addNominatedMovie}
+            />
           )}
+        </div>
+        <div>
+          <Heading heading="Nominations" />
+          <MovieList
+            movies={nominations}
+            nominateComponent={RemoveNomination}
+            handleNominateClick={removeNominatedMovie}
+          />
         </div>
       </div>
     </div>
