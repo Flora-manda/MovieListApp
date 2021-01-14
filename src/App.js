@@ -13,7 +13,7 @@ function App() {
   const [data, setData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(false);
-  const [nominations, setNominations] = useState();
+  const [nominations, setNominations] = useState([]);
   const debouncedSearchTerm = useDebounce(searchTerm, 400);
 
   // async request to fetch list of movies from OMDB API
@@ -51,11 +51,8 @@ function App() {
   // handler function to nominate movie
   const addNominatedMovie = (movie) => {
     movie.isNominated = true;
-    if (nominations !== undefined) {
-      const nominationList = [...nominations, movie];
-      setNominations(nominationList);
-      saveToLocalStorage(nominationList);
-    }
+    setNominations([...nominations, movie]);
+    saveToLocalStorage([...nominations, movie]);
   };
   // handler function to remove nominated movie
   const removeNominatedMovie = (movie) => {
