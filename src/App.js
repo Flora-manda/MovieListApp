@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Loading } from "carbon-components-react";
+import { InlineNotification, Loading } from "carbon-components-react";
 import "./App.scss";
 import Heading from "./components/Heading";
 import MovieList from "./components/MovieList";
@@ -10,7 +10,7 @@ import AddNomination from "./components/AddNomination";
 import RemoveNomination from "./components/RemoveNomination";
 
 function App() {
-  const [listOfMovies, setListOfMovies] = useState([]);
+  const [data, setData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(false);
   const [nominations, setNominations] = useState([]);
@@ -23,21 +23,41 @@ function App() {
       setLoading(true);
       getMovies(debouncedSearchTerm).then((results) => {
         setLoading(false);
-        setListOfMovies(results);
+        setData(results);
       });
     } else {
-      setListOfMovies([]);
+      setData([]);
     }
   }, [debouncedSearchTerm]);
 
+  // filter for only movie data
+  const listOfMovies = data?.filter(
+    (listOfMovie) => listOfMovie.Type === "movie"
+  );
+
+  // updated movie data to track nomination property
+  const modelledData = [];
+  for (let i = 0; i < listOfMovies?.length; i++) {
+    modelledData[i] = {
+      title: listOfMovies[i].Title,
+      year: listOfMovies[i].Year,
+      id: listOfMovies[i].imdbID,
+      type: listOfMovies[i].Type,
+      poster: listOfMovies[i].Poster,
+      isNominated: false,
+    };
+  }
+
   // handler function to nominate movie
   const addNominatedMovie = (movie) => {
+    movie.isNominated = true;
     const nominationList = [...nominations, movie];
     setNominations(nominationList);
     saveToLocalStorage(nominationList);
   };
   // handler function to remove nominated movie
   const removeNominatedMovie = (movie) => {
+    movie.isNominated = false;
     const nominationList = nominations.filter(
       (nomination) => nomination.imdbID !== movie.imdbID
     );
@@ -68,6 +88,15 @@ function App() {
               searchTerm={searchTerm}
               setSearchTerm={setSearchTerm}
             />
+            {nominations.length >= 5 && (
+              <div className="justify-center">
+                <InlineNotification
+                  kind="warning"
+                  iconDescription="Close"
+                  title="You have reached or exceeded the maximum number of 5 nominations."
+                />
+              </div>
+            )}
           </div>
           <div className="justify-space-between">
             <div className="movie-list-container">

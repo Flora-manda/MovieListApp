@@ -27,7 +27,7 @@ body,
 
 .movie-list-container {
   padding: 50px;
-  margin: 100px 30px 100px 30px;
+  margin: 50px 30px 50px 30px;
   background-color: #f4f4f4;
   border-radius: 10px;
   width: 100%;
@@ -101,6 +101,8 @@ h3 {
   }
 }
 
-.btn-disabled {
-  background-color: orangered;
+.justify-center {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
 }
