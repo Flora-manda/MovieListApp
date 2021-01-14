@@ -88,7 +88,7 @@ function App() {
               searchTerm={searchTerm}
               setSearchTerm={setSearchTerm}
             />
-            {nominations.length >= 5 && (
+            {nominations?.length >= 5 && (
               <div className="justify-center">
                 <InlineNotification
                   kind="warning"

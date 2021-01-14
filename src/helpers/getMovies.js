@@ -1,12 +1,12 @@
-export const getMovies = async function (searchTerm) {
-  const apiKey = "6394ca94";
-  const url = `https://www.omdbapi.com/?s=${searchTerm}&apikey=${apiKey}`;
+import axios from "axios";
 
-  return fetch(url, {
-    method: "GET",
-  })
-    .then((response) => response.json())
-    .then((response) => response.Search)
+export const getMovies = async function (searchTerm) {
+  const url = `https://www.omdbapi.com/?s=${searchTerm}&apikey=${process.env.REACT_APP_API_KEY}`;
+
+  return axios
+    .get(url)
+    .then((response) => response.data)
+    .then((data) => data.Search)
     .catch((error) => {
       throw new Error(error);
     });
