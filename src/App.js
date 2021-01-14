@@ -69,26 +69,36 @@ function App() {
               setSearchTerm={setSearchTerm}
             />
           </div>
-          {loading ? (
-            <Loading
-              description="Active loading indicator"
-              withOverlay={false}
-            />
-          ) : (
-            <MovieList
-              movies={listOfMovies}
-              nominateComponent={AddNomination}
-              handleNominateClick={addNominatedMovie}
-            />
-          )}
-        </div>
-        <div>
-          <Heading heading="Nominations" />
-          <MovieList
-            movies={nominations}
-            nominateComponent={RemoveNomination}
-            handleNominateClick={removeNominatedMovie}
-          />
+          <div className="justify-space-between">
+            <div className="movie-list-container">
+              <h3>Results for "{debouncedSearchTerm}"</h3>
+              {loading ? (
+                <Loading
+                  description="Active loading indicator"
+                  withOverlay={false}
+                />
+              ) : (
+                <MovieList
+                  movies={listOfMovies}
+                  nominateComponent={AddNomination}
+                  handleNominateClick={addNominatedMovie}
+                />
+              )}
+              {debouncedSearchTerm.length > 0 && listOfMovies === undefined && (
+                <div className="non-ideal-result">
+                  No results found! Try another search.
+                </div>
+              )}
+            </div>
+            <div className="movie-list-container">
+              <h3>Nominations</h3>
+              <MovieList
+                movies={nominations}
+                nominateComponent={RemoveNomination}
+                handleNominateClick={removeNominatedMovie}
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>

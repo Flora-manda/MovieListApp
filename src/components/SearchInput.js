@@ -3,7 +3,7 @@ import { Search } from "carbon-components-react";
 
 export default function SearchInput(props) {
   return (
-    <div>
+    <div className="search-box-container">
       <Search
         labelText=""
         id="search-1"

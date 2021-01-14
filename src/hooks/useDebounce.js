@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 
+// hook allows for debouncing any fast changing value in a search input
 export default function useDebounce(value, delay) {
   // State and setters for debounced value
   const [debouncedValue, setDebouncedValue] = useState(value);
