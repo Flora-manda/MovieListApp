@@ -93,7 +93,7 @@ function App() {
                 <InlineNotification
                   kind="warning"
                   iconDescription="Close"
-                  title="You have reached or exceeded the maximum number of 5 nominations."
+                  title="You have reached the maximum number of 5 nominations."
                 />
               </div>
             )}
@@ -111,6 +111,7 @@ function App() {
                   movies={listOfMovies}
                   nominateComponent={AddNomination}
                   handleNominateClick={addNominatedMovie}
+                  numberOfNominations={nominations.length}
                 />
               )}
               {debouncedSearchTerm.length > 0 && listOfMovies === undefined && (

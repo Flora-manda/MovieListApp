@@ -24,7 +24,10 @@ export default function MovieList(props) {
                 </div>
               </div>
               <div onClick={() => props.handleNominateClick(movie)}>
-                <NominateComponent isNominated={movie.isNominated} />
+                <NominateComponent
+                  isNominated={movie.isNominated}
+                  numberOfNominations={props.numberOfNominations}
+                />
               </div>
             </div>
           </div>
