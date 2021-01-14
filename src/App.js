@@ -51,9 +51,11 @@ function App() {
   // handler function to nominate movie
   const addNominatedMovie = (movie) => {
     movie.isNominated = true;
-    setNominations([...nominations, movie]);
-    saveToLocalStorage([...nominations, movie]);
+    const nominationList = [...nominations, movie];
+    setNominations(nominationList);
+    saveToLocalStorage(nominationList);
   };
+
   // handler function to remove nominated movie
   const removeNominatedMovie = (movie) => {
     movie.isNominated = false;
@@ -74,7 +76,9 @@ function App() {
     const nominatedMovies = JSON.parse(
       localStorage.getItem("movie-nominations")
     );
-    setNominations(nominatedMovies);
+    if (nominatedMovies) {
+      setNominations(nominatedMovies);
+    }
   }, []);
 
   return (
