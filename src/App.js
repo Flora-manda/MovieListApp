@@ -22,8 +22,8 @@ function App() {
     if (debouncedSearchTerm) {
       setLoading(true);
       getMovies(debouncedSearchTerm).then((results) => {
-        setLoading(false);
         setData(results);
+        setLoading(false);
       });
     } else {
       setData([]);
@@ -111,14 +111,16 @@ function App() {
                   movies={listOfMovies}
                   nominateComponent={AddNomination}
                   handleNominateClick={addNominatedMovie}
-                  numberOfNominations={nominations.length}
+                  numberOfNominations={nominations?.length}
                 />
               )}
-              {debouncedSearchTerm.length > 0 && listOfMovies === undefined && (
-                <div className="non-ideal-result">
-                  No results found! Try another search.
-                </div>
-              )}
+              {!loading &&
+                debouncedSearchTerm.length > 0 &&
+                listOfMovies === undefined && (
+                  <div className="non-ideal-result">
+                    No results found! Try another search.
+                  </div>
+                )}
             </div>
             <div className="movie-list-container">
               <h3>Nominations</h3>
