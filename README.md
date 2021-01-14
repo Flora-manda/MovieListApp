@@ -2,7 +2,7 @@
 
 This project allows users to search the OMDB database for their favorite movies and nominate them for the infamous Shoppies Award. Users can nominate and remove nomiations as needed. Nominations will be stored upon page reload, until a session has ended.
 
-Application was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Application was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) and IBM Carbon Design for styling.
 
 ## Available Scripts
 

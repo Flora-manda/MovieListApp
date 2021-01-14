@@ -16,7 +16,7 @@ function App() {
   const [nominations, setNominations] = useState([]);
   const debouncedSearchTerm = useDebounce(searchTerm, 400);
 
-  // asyn request to fetch list of movies from OMDB API
+  // async request to fetch list of movies from OMDB API
   useEffect(() => {
     getMovies(debouncedSearchTerm);
     if (debouncedSearchTerm) {
@@ -35,7 +35,7 @@ function App() {
     (listOfMovie) => listOfMovie.Type === "movie"
   );
 
-  // updated movie data to track nomination property
+  // updated movie data structure to track nomination property
   const modelledData = [];
   for (let i = 0; i < listOfMovies?.length; i++) {
     modelledData[i] = {
